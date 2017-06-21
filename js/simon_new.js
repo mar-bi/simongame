@@ -26,9 +26,9 @@ $(document).ready(function() {
 
 		//console.log(on);
 		if (turnOn) {
-			console.log('Starting a game!');
+			//console.log('Starting a game!');
 			gameOn = true;
-			console.log('Game: ', gameOn);
+			//console.log('Game: ', gameOn);
 			//turn on the screen
 			$('div#screen').css({'background-color': '#242422'});
 			$('div#screen p').text(count);
@@ -41,7 +41,7 @@ $(document).ready(function() {
 			sequence = [];
 			userInput = [];
 			$('div.colbutton').off('click');
-			console.log('Game: ', gameOn);
+			//console.log('Game: ', gameOn);
 			//turn off the screen and lights
 			$('div#strict-light').css({'background-color': '#720e03'});
 			$('div#screen').css({'background-color': '#3e3e3b'});
@@ -52,20 +52,18 @@ $(document).ready(function() {
 	// start button
 	$('div#start-btn').on('click', function() {
 		//console.log(gameOn);
-		if (gameOn && !isPlaying && !isStrict) {
+		if (gameOn && !isPlaying) {
 			isPlaying = true;
-			
 			resetWin();
 			$('div#screen p').text(count);
 			$('div.colbutton').off('click');
-			//console.log('game');
-			//console.log('is playing ', isPlaying);
-			
+					
 			//start the game
 			playGame();
 		}
-		else if (gameOn && isPlaying && !isStrict) {
+		else if (gameOn && isPlaying) {
 			//reset
+			var delayed = 1000; 
 			isPlaying = false;
 			count = 0;
 			sequence = [];
@@ -73,10 +71,11 @@ $(document).ready(function() {
 			clearInterval(delay);
 			$('div#screen p').text(count);
 			$('div.colbutton').off('click');
+			//if (playingAudio) {delayed = 4000;}
 			setTimeout(function() {
 				isPlaying = true;
 				playGame();	
-			}, 500);
+			}, delayed);
 		}
 		else {
 			console.log('do nothing');
@@ -85,51 +84,20 @@ $(document).ready(function() {
 
 	//strict button
 	$('div#strict-btn').on('click', function() {
-		console.log(gameOn);
-		if (gameOn && !isPlaying && !isStrict) {
+		//console.log(gameOn);
+
+		if (gameOn && !isStrict) {
 			isStrict = true;
 			resetWin();
-			$('div#screen p').text(count);
-			$('div.colbutton').off('click');
+			// $('div#screen p').text(count);
+			// $('div.colbutton').off('click');
 			console.log('strict');
-			//console.log('is srtict ', isStrict);
 			//start the game in strict mode
 			$('div#strict-light').css({'background-color': '#f82b16'});
-			playStrict();
-		}
-		else if (gameOn && !isPlaying && isStrict) {
-			//off strict mode
-			isStrict = false;
-			count = 0;
-			sequence = [];
-			userInput = [];
-			clearInterval(delay);
-			$('div#screen p').text(count);
-			$('div.colbutton').off('click');
-			$('div#strict-light').css({'background-color': '#720e03'});
-		}
-		else if (gameOn && isPlaying && !isStrict) {
-			console.log('SWITCH TO STRICT');
-			//switch to strict mode
-			var delayed = 500;
-			isPlaying = false;
-			count = 0;
-			sequence = [];
-			userInput = [];
-			clearInterval(delay);
-			$('div#screen p').text(count);
-			$('div.colbutton').off('click');
-			$('div#strict-light').css({'background-color': '#f82b16'});
-			if (playingAudio) {
-				delayed = 5000;
-			}
-			setTimeout(function() {
-				isStrict = true;
-				playStrict();	
-			}, delayed);
 		}
 		else {
-			console.log('do nothing');
+			isStrict = false;
+			$('div#strict-light').css({'background-color': '#720e03'});
 		}
 	});
 
@@ -138,7 +106,7 @@ $(document).ready(function() {
 
 	//gameplay
 	function playGame(){
-		//console.log('Before:','sequence:', sequence, 'userInput:', userInput, 'count:', count);
+		
 		if (gameOn && isPlaying) {
 
 			userInput = [];
@@ -146,7 +114,7 @@ $(document).ready(function() {
 			updateSequence(sequence);
 			count = sequence.length;
 			$('div#screen p').text(count);
-			console.log('After:','sequence:', sequence, 'userInput:', userInput, 'count:', count);
+			//console.log('After:','sequence:', sequence, 'userInput:', userInput, 'count:', count);
 
 			playSequence(sequence);
 
@@ -155,7 +123,6 @@ $(document).ready(function() {
 		}
 		else {
 			isPlaying = false;
-			isStrict = false;
 			count = 0;
 			sequence = [];
 			userInput = [];
@@ -173,7 +140,6 @@ $(document).ready(function() {
 		}
 		else {
 			isPlaying = false;
-			isStrict = false;
 			count = 0;
 			sequence = [];
 			userInput = [];
@@ -181,37 +147,12 @@ $(document).ready(function() {
 	}
 
 //-----------------------STRICT MODE--------------------------------------------
-	//strict gameplay
-	function playStrict(){
-		console.log('Strict:', isStrict);
-		if (gameOn && isStrict) {
-			userInput = [];
-			//add a random number to sequence
-			updateSequence(sequence);
-			count = sequence.length;
-			$('div#screen p').text(count);
-			console.log('After:','sequence:', sequence, 'userInput:', userInput, 'count:', count);
-
-			playSequence(sequence);
-
-			// add event listener
-			listenUser(0, playStrict, strictMode);
-		}
-		else {
-			isPlaying = false;
-			isStrict = false;
-			count = 0;
-			sequence = [];
-			userInput = [];
-		}	
-	}
-
 	function strictMode() {
 		//restart from beginning
 		counter = 0;
 		sequence = [];
 		$('div#screen p').text(count);
-		playStrict();
+		playGame();
 	}
 
 //--------------------------HELPERS----------------------------------------------
@@ -228,8 +169,8 @@ $(document).ready(function() {
 
 	// plays sequence of buttons + sounds
 	function playSequence(arr) {
-		if (gameOn && (isPlaying || isStrict)) {
-			console.log('playSequence started');
+		if (gameOn && isPlaying) {
+			//console.log('playSequence started');
 			var i = 0;
 			delay = setInterval(function() {
 				showLights(arr[i]);
@@ -244,8 +185,8 @@ $(document).ready(function() {
 
 	// animate the lighting of buttons
 	function showLights(elem) {
-		if (gameOn && (isPlaying || isStrict)) {
-			console.log('Show Lights started');
+		if (gameOn && isPlaying) {
+			//console.log('Show Lights started');
 			var button = $('div[data-label="' + elem + '"]');
 			button.addClass('highlight');
 			playSound(elem);
@@ -257,23 +198,27 @@ $(document).ready(function() {
 
 	//add sounds (audio) to buttons
 	function playSound(elem) {
-		if (gameOn && (isPlaying || isStrict)) {
-			console.log('play Sound started');
+		if (gameOn && isPlaying) {
+			//playingAudio = true;
+			//console.log('play Sound started');
 			var audio = '<audio src="'+ sounds[elem] + '" autoplay></audio>';
 			//console.log(audio);
 			$('div[data-label="' + elem + '"]').html(audio);
+			// setTimeout(function() {
+			// 	playingAudio = false;
+			// }, 1000);
 		}	
 	}
 	// plays the sound of fail
 	function playFail(elem) {
-		if (gameOn && (isPlaying || isStrict)) {
-			playingAudio = true;
+		if (gameOn && isPlaying) {
+			// playingAudio = true;
 			var audio = '<audio src="audio/Sad_Trombone.mp3" autoplay></audio>';
 			//console.log(audio);
 			$('div[data-label="' + elem + '"]').html(audio);
-			setTimeout(function() {
-				playingAudio = false;
-			}, 5000);
+			// setTimeout(function() {
+			// 	playingAudio = false;
+			// }, 5000);
 		}	
 	}
 
@@ -284,7 +229,7 @@ $(document).ready(function() {
 	}
 
 	// checks for a win
-	function isWon(callback) {
+	function isWon() {
 		if (sequence.length === 20) { 
 			$('div#win').removeClass('hidden');
 			// $('div#win h2').show(fast);
@@ -298,22 +243,18 @@ $(document).ready(function() {
 			sequence = [];
 			userInput = [];
 			isPlaying = false;
-			isStrict = false;
 			$('div#screen p').text(count);
 			$('div#strict-light').css({'background-color': '#720e03'});
 		}
 		else {
-			//console.log('next round!');
-			//console.log(isStrict);
 			setTimeout(function() {
-
-				callback();	
+				playGame();	
 			}, 1500);
 		}
 	}
 	
 	// listen, record and validate a user input
-	function listenUser(index, callback1, callback2) {
+	function listenUser(index) {
 		
 		$('div.colbutton').on('click', function() {
 			var num = $(this).attr('data-label');
@@ -329,20 +270,30 @@ $(document).ready(function() {
 			 	index++;
 			 	//console.log(isStrict);
 
-				(index >= sequence.length) ? isWon(callback1): listenUser(index, callback1, callback2);
+				(index >= sequence.length) ? isWon(): listenUser(index);
 			}
 			else {
 			 	$('div#screen p').text('!!');
 			 	setTimeout(function() {
 			 		playFail(num);
 			 	}, 1000);
-			 	setTimeout(function() {
-			 		$('div#screen p').text(count);
-			 		callback2();
-			 	}, 5000);	
+
+			 	if (isStrict) {
+			 		setTimeout(function() {
+			 			$('div#screen p').text(count);
+			 			strictMode();
+			 		}, 4000);
+			 	}
+			 	else {
+			 		setTimeout(function() {
+			 			$('div#screen p').text(count);
+			 			playLast();
+			 		}, 4000);
+			 	}		
 			}	
 		});
 	}
+
 	// resets the win message
 	function resetWin() {
 		$('div#win').addClass('hidden');
