@@ -1,0 +1,347 @@
+//variables
+
+//colors
+$red: #f82b16;
+$green: #47d658;
+$yellow: #fffa3a;
+$blue: #0089e7;
+$black: #242422;
+
+$width: 400px;
+$widthsmall: 290px;
+$smallscreen: 450px;
+
+//mixins
+@mixin border($width, $bord-color, $radius:0 0 0 0) {
+	border: {
+		color: $bord-color;
+		width: $width;
+		style: solid;
+	};
+	border-radius: $radius;
+}
+
+@mixin noborders($side1, $side2){
+	border-#{$side1}-style: none;
+	border-#{$side2}-style: none;
+}
+
+@mixin activebutton($xshadow, $yshadow, $xtrans, $ytrans) {
+	box-shadow: $xshadow $yshadow 5px #666;
+  	transform: translate($xtrans, $ytrans);
+}
+
+
+
+//general style
+body {
+	font-family: Helvetica, sans-serif;
+	background-color: lighten($blue, 50%);
+}
+
+h1 {
+	text-align: center;
+	font-size: 2em;
+	color: lighten($black, 20%);
+	padding: 5px;
+	@media screen and (max-width: $smallscreen) {
+		font-size: 1.5em;
+		margin: 5px 0;
+	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+footer{
+	p{
+		text-align: center;
+		color: lighten($black, 10%);
+		@media screen and (max-width: $smallscreen) {
+			margin: 3px 0;
+			font-size: 0.8em;
+		}
+	}
+}
+
+#main {
+	position: relative;
+	width: $width;
+	margin: 1em auto;
+	background-color: lighten($black, 85%);
+	@include border(1px, lighten($black, 70%), 5px);
+	@media screen and (max-width: $smallscreen) {
+		width: $widthsmall;
+		margin: 5px auto;
+	}
+}
+
+//menu
+.menu {
+	//box-sizing: border-box;
+	width: 90%;
+	height: $width/2.5;
+	background-color: lighten($black, 50%);
+	@include border(1px, lighten($black, 50%), 5px);
+	margin: 1em auto;
+	@media screen and (max-width: $smallscreen) {
+		height: $widthsmall/2;
+	}
+}
+
+.speaker {
+	width: 100%;
+	height: 40%;
+	background: url("../img/dots.jpg"); 
+	@include border(1px, $black, 5px 5px 0 0);
+	@media screen and (max-width: $smallscreen) {
+		height: 40%;
+	}
+	h2{
+		color: #fff;
+		font-size: 2.5em;
+		font-style: italic;
+		margin: 3px 0;
+		text-align: center;
+	}
+}
+
+.controls {
+	box-sizing: border-box;
+	div {
+		width: 25%;
+		float: left;
+		h4 {
+			font-size: 1em;
+			color: #fff;
+			text-align: center;
+			margin: 2px 0;
+			@media screen and (max-width: $smallscreen) {
+				font-size: 0.8em;
+			}
+		}
+	}
+}
+
+#screen {
+	width:55px;
+	height: 45px;
+	background-color: lighten($black,10%);
+	@include border(1px, $black, 5px);
+	margin: 8px 15px;
+	@media screen and (max-width: $smallscreen) {
+		width: 46px;
+		margin: 8px;
+	}
+	p {
+		margin: 8px auto;
+		color: darken($yellow, 15%);
+		font-size: 2.2em;
+		line-height: 0.8;
+		text-align: center;
+		@media screen and (max-width: $smallscreen) {
+			font-size: 2em;
+		}
+	}
+}
+
+#start-btn {
+	width: 30px;
+	height: 30px;
+	background-color: $green;
+	@include border(1px, $green, 50%);
+	margin: 20px 28px;
+	cursor: pointer;
+	box-shadow: 3px 3px 2px #666;
+	@media screen and (max-width: $smallscreen) {
+		margin: 20px 15px 5px 15px;
+	}
+	&:active {
+		@include activebutton(3px, 3px, 3px, 3px);
+	}
+}
+
+#strict-light {
+	width: 8px;
+	height: 8px;
+	background-color: darken($red,30%);
+	@include border(1px, darken($red,30%), 50%);
+	margin: 3px 39px;
+	@media screen and (max-width: $smallscreen) {
+		margin: 3px 26px;
+	}
+}
+
+#strict-btn {
+	width: 28px;
+	height: 28px;
+	background-color: $blue;
+	@include border(1px, $blue, 50%);
+	margin: 5px 29px;
+	cursor: pointer;
+	box-shadow: 3px 3px 2px #666;
+	@media screen and (max-width: $smallscreen) {
+		margin: 5px 16px;
+	}
+	&:active {
+		@include activebutton(3px, 3px, 3px, 3px);
+	}
+}
+
+.switch {
+  	position: relative;
+  	display: inline-block;
+  	width: 60px;
+  	height: 34px;
+  	margin: 19px 20px;
+  	@media screen and (max-width: $smallscreen) {
+		margin: 19px -2px 5px -2px;
+	}
+  	input {
+  		display:none;
+  	}
+}
+
+div.slider {
+  	position: absolute;
+  	width: 100%;
+  	cursor: pointer;
+  	top: 0;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  	background-color: $green;
+  	box-shadow: 3px 3px 2px #666;
+  	-webkit-transition: .4s;
+  	transition: .4s;
+	&:before {
+  		position: absolute;
+  		content: "";
+  		height: 26px;
+  		width: 26px;
+  		left: 4px;
+  		bottom: 4px;
+  		background-color: white;
+  		-webkit-transition: .4s;
+  		transition: .4s;
+	}
+}	
+
+input:checked + .slider {
+  	background-color: lighten($black, 20%);
+}
+
+input:focus + .slider {
+  	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  	-webkit-transform: translateX(26px);
+  	-ms-transform: translateX(26px);
+  	transform: translateX(26px);
+}
+
+.round {
+	border-radius: 34px;
+	&:before {
+		border-radius: 50%;
+	}
+}
+
+//drawing gameboard
+div.gameboard {
+  	width: $width/1.5;
+  	height: $width/1.5;
+	@media screen and (max-width: $smallscreen) {
+		height: $widthsmall/1.4;
+  		width: $widthsmall/1.4;
+	}
+
+}
+
+#center {
+	margin: 2em auto; 
+	border-radius: 50px;
+	box-shadow: 6px 6px 3px lighten($black, 50%);
+	z-index: -1;
+	background-color:$black;
+	@media screen and (max-width: $smallscreen) {
+		margin: 10px auto; 
+	}
+}
+
+%button {
+	height: $width/3;
+  	width: $width/3;
+  	float: left;
+  	box-sizing: border-box;
+  	cursor: grab;
+  	@media screen and (max-width: $smallscreen) {
+		height: $widthsmall/2.8;
+  		width: $widthsmall/2.8;
+	}
+	&:active {
+		opacity: 1;
+	}
+}
+
+#green {
+	@extend %button;
+	background-color: $green;
+	@include border(4px, $black, 50px 0 0 0);
+  	@include noborders(top, left);
+  	&:active{
+  		@include activebutton(-3px, -3px, -3px, -3px);
+  	}
+}
+
+#red {
+	@extend %button;
+	background-color: $red;
+	@include border(4px, $black, 0 50px 0 0);
+  	@include noborders(top, right);
+  	&:active{
+  		@include activebutton(3px, -3px, 3px, -3px);
+  	}
+}
+
+#yellow {
+	@extend %button;
+	background-color: $yellow;
+	@include border(4px, $black, 0 0 0 50px);
+  	@include noborders(bottom, left);
+  	&:active{
+  		@include activebutton(-3px, 3px, -3px, 3px);
+  	}
+}
+
+#blue {
+	@extend %button;
+	background-color: $blue;
+	@include border(4px, $black, 0 0 50px 0);
+  	@include noborders(bottom, right);
+  	&:active{
+  		@include activebutton(3px, 3px, 3px, 3px);
+  	}
+}
+
+.highlight {
+	filter: brightness(50%);
+}
+
+#win {
+	position: absolute;
+	top: 235px;
+	left: 70px;
+	h2 {
+		color: lighten(#660066, 15%); //#ffa500;
+		font-size: 4em;
+		z-index: 10;
+	}
+}
+
+.hidden {
+	display: none;
+}

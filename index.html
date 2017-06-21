@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>FCC: Simon Game</title>
+	<link rel="stylesheet" type="text/css" href="sass/style.css">
+	<title></title>
+</head>
+<body>
+	<h1>FCC: Simon Game</h1>
+
+	<div id="main">
+		<div class="menu">
+			<div class="speaker">
+				<h2>Simon</h2>
+				<div id="speak"></div>
+			</div>
+			<div class="controls">
+				<div id="count">
+					<h4>Count</h4>
+					<div id="screen"><p></p></div>
+				</div>
+				<div id="start">
+					<h4>Start/Reset</h4>
+					<div id="start-btn"></div>
+				</div>
+				<div id="strict">
+					<h4>Strict</h4>
+					<div id="strict-light"></div>
+					<div id="strict-btn"></div>
+				</div>
+				<div id="on-off">
+					<h4>On/Off</h4>
+					<label class="switch">
+  						<input type="checkbox" id="switch">
+  						<div class="slider round"></div>
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="gameboard" id="center">
+			<div id="green" class="gameboard colbutton" data-label="0"></div>
+			<div id="red" class="gameboard colbutton" data-label="1"></div>
+			<div id="yellow" class="gameboard colbutton" data-label="2"></div>
+			<div id="blue" class="gameboard colbutton" data-label="3"></div>
+		</div>
+
+		<div id="win" class="hidden">
+			<h2>You win!</h2>
+		</div>
+	</div>
+	
+	<footer><p>made by <a href="http://mar-bi.github.io" target="_blank">mar-bi</a> &copy; 2017</p></footer>
+
+	<script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+	<script type="text/javascript" src="js/simon.js"></script>
+</body>
+</html>
