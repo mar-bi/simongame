@@ -6,7 +6,6 @@ $(document).ready(function() {
 	var gameOn = false,
 		isPlaying = false,
 		isStrict = false,
-		playingAudio = false,
 		count = 0,
 		sequence = [],
 		userInput = [],
@@ -23,12 +22,9 @@ $(document).ready(function() {
 	//on-off switch
 	$('div.slider').on('click', function() {
 		var turnOn = $('input#switch').prop('checked');
-
-		//console.log(on);
+		
 		if (turnOn) {
-			//console.log('Starting a game!');
 			gameOn = true;
-			//console.log('Game: ', gameOn);
 			//turn on the screen
 			$('div#screen').css({'background-color': '#242422'});
 			$('div#screen p').text(count);
@@ -41,7 +37,7 @@ $(document).ready(function() {
 			sequence = [];
 			userInput = [];
 			$('div.colbutton').off('click');
-			//console.log('Game: ', gameOn);
+		
 			//turn off the screen and lights
 			$('div#strict-light').css({'background-color': '#720e03'});
 			$('div#screen').css({'background-color': '#3e3e3b'});
@@ -71,7 +67,6 @@ $(document).ready(function() {
 			clearInterval(delay);
 			$('div#screen p').text(count);
 			$('div.colbutton').off('click');
-			//if (playingAudio) {delayed = 4000;}
 			setTimeout(function() {
 				isPlaying = true;
 				playGame();	
@@ -84,14 +79,10 @@ $(document).ready(function() {
 
 	//strict button
 	$('div#strict-btn').on('click', function() {
-		//console.log(gameOn);
-
 		if (gameOn && !isStrict) {
 			isStrict = true;
 			resetWin();
-			// $('div#screen p').text(count);
-			// $('div.colbutton').off('click');
-			console.log('strict');
+			
 			//start the game in strict mode
 			$('div#strict-light').css({'background-color': '#f82b16'});
 		}
@@ -114,8 +105,7 @@ $(document).ready(function() {
 			updateSequence(sequence);
 			count = sequence.length;
 			$('div#screen p').text(count);
-			//console.log('After:','sequence:', sequence, 'userInput:', userInput, 'count:', count);
-
+			
 			playSequence(sequence);
 
 			// add event listener
@@ -170,7 +160,6 @@ $(document).ready(function() {
 	// plays sequence of buttons + sounds
 	function playSequence(arr) {
 		if (gameOn && isPlaying) {
-			//console.log('playSequence started');
 			var i = 0;
 			delay = setInterval(function() {
 				showLights(arr[i]);
@@ -199,26 +188,16 @@ $(document).ready(function() {
 	//add sounds (audio) to buttons
 	function playSound(elem) {
 		if (gameOn && isPlaying) {
-			//playingAudio = true;
-			//console.log('play Sound started');
 			var audio = '<audio src="'+ sounds[elem] + '" autoplay></audio>';
-			//console.log(audio);
 			$('div[data-label="' + elem + '"]').html(audio);
-			// setTimeout(function() {
-			// 	playingAudio = false;
-			// }, 1000);
 		}	
 	}
+
 	// plays the sound of fail
 	function playFail(elem) {
 		if (gameOn && isPlaying) {
-			// playingAudio = true;
 			var audio = '<audio src="audio/Sad_Trombone.mp3" autoplay></audio>';
-			//console.log(audio);
 			$('div[data-label="' + elem + '"]').html(audio);
-			// setTimeout(function() {
-			// 	playingAudio = false;
-			// }, 5000);
 		}	
 	}
 
@@ -232,7 +211,6 @@ $(document).ready(function() {
 	function isWon() {
 		if (sequence.length === 20) { 
 			$('div#win').removeClass('hidden');
-			// $('div#win h2').show(fast);
 			$('div#win h2').fadeOut(4000);
 			setTimeout(function() {
 				playWin();	
@@ -258,19 +236,13 @@ $(document).ready(function() {
 		
 		$('div.colbutton').on('click', function() {
 			var num = $(this).attr('data-label');
-			//console.log('Num:', num);
-			//console.log('UserInput:', userInput);
 			playSound(num);
 
 			$('div.colbutton').off('click');
 			if (num == sequence[index]) {
-			 	//console.log('Num: ', num, 'sequence: ', sequence);
 			 	userInput.push(num);
-			 	//console.log(userInput);
 			 	index++;
-			 	//console.log(isStrict);
-
-				(index >= sequence.length) ? isWon(): listenUser(index);
+			 	(index >= sequence.length) ? isWon(): listenUser(index);
 			}
 			else {
 			 	$('div#screen p').text('!!');
