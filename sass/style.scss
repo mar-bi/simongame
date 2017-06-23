@@ -335,11 +335,21 @@ div.gameboard {
 	position: absolute;
 	top: 235px;
 	left: 70px;
+	
 	h2 {
 		color: lighten(#660066, 15%); //#ffa500;
 		font-size: 4em;
 		z-index: 10;
 	}
+
+	@media screen and (max-width: $smallscreen) {
+		top: 195px;
+		left: 42px;
+		h2 {
+			font-size: 3.2em;
+		}
+	}
+	
 }
 
 .hidden {

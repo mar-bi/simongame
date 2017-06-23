@@ -217,7 +217,7 @@ $(document).ready(function() {
 			}, 750);
 			
 			//reset counter, sequence, userInput, isPlaying, isStrict
-			counter = 0;
+			count = 0;
 			sequence = [];
 			userInput = [];
 			isPlaying = false;

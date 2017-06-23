@@ -296,6 +296,12 @@ div.gameboard {
     color: #b300b3;
     font-size: 4em;
     z-index: 10; }
+  @media screen and (max-width: 450px) {
+    #win {
+      top: 195px;
+      left: 42px; }
+      #win h2 {
+        font-size: 3.2em; } }
 
 .hidden {
   display: none; }
