@@ -7,4 +7,4 @@ FreeCodeCamp assignment for Front-End Developer certificate.
 
 *HTML, CSS, SASS, JavaScript, jQuery*
 
-[link yo game](https://mar-bi.github.io/simongame/)
+[link to game](https://mar-bi.github.io/simongame/)
